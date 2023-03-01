@@ -1,0 +1,42 @@
+.link-info-wrapper {
+    display: flex;
+    gap: 0.5rem;
+    margin-top: 1rem;
+    .link-item {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 6rem;
+        background-color: #ffffff;
+        padding: 1rem 0;
+        flex-basis: 0;
+        flex-grow: 999;
+    }
+    .description {
+        display: flex;
+        align-items: center;
+    }
+
+    .link-handle-wrapper {
+        display: flex;
+        align-content: center;
+        text-align: center;
+        background-color: #ffffff;
+        flex-basis: 4rem;
+        flex-grow: 1;
+        .handle-link-btn {
+            width: 100%;
+            text-align: center;
+            align-items: center;
+            .btn-icon {
+                color: #959db3;
+
+                .active {
+                    padding: 0.4rem;
+                    background-color: #bdc2d2;
+                    border-radius: 0.5rem;
+                    color: white;
+                }
+            }
+        }
+    }
+}

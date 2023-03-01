@@ -1,0 +1,18 @@
+.filter-title {
+    width: 20%;
+
+    .icon-filter {
+        .filter-text {
+            font-size: 1.8rem;
+            color: #5a6276;
+            font-weight: 600;
+        }
+    }
+    .reset-filter {
+        .reset-text {
+            text-decoration: underline;
+            color: #31adff;
+            cursor: pointer;
+        }
+    }
+}

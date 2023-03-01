@@ -1,0 +1,14 @@
+.cate-title {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 6rem;
+    align-items: center;
+    .description-link {
+        display: flex;
+        align-items: center;
+    }
+
+    .title-text {
+        width: 100%;
+    }
+}
