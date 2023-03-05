@@ -17,7 +17,7 @@ const CateTitle = () => {
                 cateTitles.map((item, index) =>
                     item.checkbox ? (
                         <div key={index} className={cx('description-link')}>
-                            <Checkbox defaultChecked />
+                            <Checkbox />
                             <p className={cx('title-text')}>{item.title}</p>
                         </div>
                     ) : (
