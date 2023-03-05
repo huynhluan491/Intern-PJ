@@ -15,7 +15,8 @@ function DashBoard() {
     const { typeCategories } = useSelector((state) => state.FilterReducer);
     const [filterData, setFilteredData] = useState([]);
     const [typeLink, setTypeLink] = useState(typeCategories);
-    const [filterTool, setFilterTool] = useState(false);
+    const [filterTool, setFilterTool] = useState(true);
+    const [unFilter, setUnFilter] = useState(true);
     const { LinkData } = useSelector((state) => ({
         LinkData: state.LinkReducer.LinkData,
     }));
@@ -57,8 +58,8 @@ function DashBoard() {
                 <div className={cx('right-side')}>
                     <Header />
                     <div className={cx('content-wrapper')}>
-                        <UserAction />
-                        <Search resetFilter={resetFilter} />
+                        <UserAction setUnFilter={setUnFilter} unFilter={unFilter} />
+                        <Search resetFilter={resetFilter} setUnFilter={setUnFilter} />
                         <LinkPaginate
                             itemsPerPage={4}
                             typeLink={typeCategories}

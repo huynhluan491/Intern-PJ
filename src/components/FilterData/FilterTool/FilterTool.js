@@ -3,9 +3,10 @@ import styles from './FilterTool.module.scss';
 
 const cx = classNames.bind(styles);
 
-const FilterTool = ({ resetFilter }) => {
+const FilterTool = ({ resetFilter, setUnFilter }) => {
     const handleResetFilter = () => {
         resetFilter();
+        setUnFilter(true);
     };
     return (
         <div className={cx('filter-title')}>

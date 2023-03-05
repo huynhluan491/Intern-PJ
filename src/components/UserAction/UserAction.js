@@ -9,13 +9,13 @@ import HandleForm from '../HandleForm/HandleForm';
 
 const cx = classNames.bind(styles);
 
-const UserAction = () => {
+const UserAction = ({ setUnFilter, unFilter }) => {
     const [showProduct, setShowProduct] = useState(true);
     const [showAddForm, setShowAddForm] = useState(false);
     const [showPost, setShowPost] = useState(true);
     const dispatch = useDispatch();
     const checkedRef = useRef();
-
+    console.log(unFilter);
     const newTypeCategories = {
         product: showProduct,
         post: showPost,
@@ -23,6 +23,7 @@ const UserAction = () => {
 
     useEffect(() => {
         dispatch({ type: 'FILTER_TYPE_CATEGORIES', newTypeCategories });
+        setUnFilter(false);
     }, [showPost, showProduct]);
 
     const handleShowAddForm = () => {
@@ -32,6 +33,7 @@ const UserAction = () => {
     useEffect(() => {
         console.log(showPost);
         console.log(showProduct);
+        console.log(unFilter);
     });
 
     return (
@@ -39,27 +41,19 @@ const UserAction = () => {
             <div className={cx('filter-box-wrapper')}>
                 <div className={cx('link-filter-box')}>
                     <p className={cx('title')}>Dead link sản phẩm</p>
-                    <Checkbox
-                        defaultChecked
-                        sx={{
-                            '&.Mui-checked': {
-                                color: '#008000',
-                            },
-                        }}
+                    <input
+                        type="checkbox"
+                        defaultChecked={unFilter}
                         onClick={() => setShowProduct(!showProduct)}
                         ref={checkedRef}
                     />
                 </div>
                 <div className={cx('link-filter-box')}>
                     <p className={cx('title')}>Dead link bài viết & khác</p>
-                    <Checkbox
-                        defaultChecked
-                        sx={{
-                            '&.Mui-checked': {
-                                color: '#008000',
-                            },
-                        }}
-                        onClick={() => setShowPost(!showPost)}
+                    <input
+                        type="checkbox"
+                        defaultChecked={unFilter}
+                        onClick={() => setShowProduct(!showPost)}
                         ref={checkedRef}
                     />
                 </div>

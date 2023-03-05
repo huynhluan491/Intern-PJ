@@ -9,7 +9,7 @@ import { useDispatch } from 'react-redux';
 
 const cx = classNames.bind(styles);
 
-const Search = ({ resetFilter }) => {
+const Search = ({ resetFilter, setUnFilter }) => {
     const [searchQuery, setSearchQuery] = useState('');
     const dispatch = useDispatch();
     const inputRef = useRef();
@@ -30,7 +30,7 @@ const Search = ({ resetFilter }) => {
     return (
         <div className={cx('search-container')}>
             <div className={cx('tool-wrapper')}>
-                <FilterTool resetFilter={resetFilter} />
+                <FilterTool resetFilter={resetFilter} setUnFilter={setUnFilter} />
                 <div className={cx('find-link-title')}>
                     <p className={cx('title')}>Tìm kiếm đường link</p>
                     <div className={cx('search-input')}>
