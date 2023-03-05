@@ -31,9 +31,8 @@ const UserAction = ({ setUnFilter, unFilter }) => {
     };
 
     useEffect(() => {
-        console.log(showPost);
-        console.log(showProduct);
-        console.log(unFilter);
+        console.log('ShowPost', showPost);
+        console.log('showPost: ', showPost);
     });
 
     return (
@@ -44,7 +43,7 @@ const UserAction = ({ setUnFilter, unFilter }) => {
                     <input
                         type="checkbox"
                         defaultChecked={unFilter}
-                        onClick={() => setShowProduct(!showProduct)}
+                        onChange={() => setShowProduct(!showProduct)}
                         ref={checkedRef}
                     />
                 </div>
@@ -53,7 +52,7 @@ const UserAction = ({ setUnFilter, unFilter }) => {
                     <input
                         type="checkbox"
                         defaultChecked={unFilter}
-                        onClick={() => setShowProduct(!showPost)}
+                        onChange={() => setShowPost(!showPost)}
                         ref={checkedRef}
                     />
                 </div>

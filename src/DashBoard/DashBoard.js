@@ -27,12 +27,8 @@ function DashBoard() {
 
     useEffect(() => {
         handleFilterData();
-        console.log(LinkData);
-    }, [debouncedValue, LinkData]);
-
-    useEffect(() => {
         console.log(typeCategories);
-    });
+    }, [debouncedValue, LinkData, typeCategories, typeLink]);
 
     const handleFilterData = () => {
         const result = LinkData?.filter((item) =>

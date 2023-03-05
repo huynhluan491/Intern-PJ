@@ -6,6 +6,8 @@ const initialState = {
 };
 
 const FilterReducer = (state = initialState, action) => {
+    console.log('state: ', state);
+    console.log('payload: ', action.payload);
     switch (action.type) {
         case 'FILTER_TYPE_CATEGORIES':
             const { product, post } = action.newTypeCategories;
