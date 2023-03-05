@@ -51,7 +51,6 @@ const LinkPaginate = (props) => {
             const filteredItems = getFilteredItems(linkArray, typeLink);
             setFilteredArray(filteredItems);
             setPageCount(Math.ceil(filteredItems.length / itemsPerPage));
-            setItemOffset(0);
         }
     }, [itemOffset, itemsPerPage, linkArray, typeLink.product, typeLink.post, mappingList]);
 
@@ -65,7 +64,11 @@ const LinkPaginate = (props) => {
     };
 
     const handleBackToLast = () => {
-        setItemOffset(linkArray?.length - 1);
+        // setItemOffset(linkArray?.length - 1);
+        // updateItems();
+        const lastPageIndex = Math.max(pageCount - 1, 0);
+        const lastPageOffset = lastPageIndex * itemsPerPage;
+        setItemOffset(lastPageOffset);
         updateItems();
     };
 
