@@ -2,25 +2,50 @@ import classNames from 'classnames/bind';
 import styles from './DashBoard.module.scss';
 import Header from '~/components/Header/Header';
 import UserAction from '~/components/UserAction/UserAction';
-import FilterData from '~/components/FilterData/FilterData';
 import SideBar from '~/components/SiderBar/SiderBar';
-import HandleForm from '~/components/HandleForm/HandleForm';
 import { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
+import Search from '~/components/FilterData/Search/Search';
+import LinkPaginate from '~/components/LinkPaginate/LinkPaginate';
+import useDebounce from '~/Hook/useDebounce';
 
 const cx = classNames.bind(styles);
 
 function DashBoard() {
-    const [showForm, setShowForm] = useState(false);
-
     const { typeCategories } = useSelector((state) => state.FilterReducer);
+    const [filterData, setFilteredData] = useState([]);
+    const [typeLink, setTypeLink] = useState(typeCategories);
+    const [filterTool, setFilterTool] = useState(false);
+    const { LinkData } = useSelector((state) => ({
+        LinkData: state.LinkReducer.LinkData,
+    }));
+    const { searchQuery } = useSelector((state) => ({
+        searchQuery: state.SearchReducer.searchQuery,
+    }));
+    const debouncedValue = useDebounce(searchQuery);
+
+    useEffect(() => {
+        handleFilterData();
+        console.log(LinkData);
+    }, [debouncedValue, LinkData]);
 
     useEffect(() => {
         console.log(typeCategories);
     });
 
-    const handleShowForm = () => {
-        setShowForm(!showForm);
+    const handleFilterData = () => {
+        const result = LinkData?.filter((item) =>
+            item?.description.toLocaleLowerCase().includes(debouncedValue.toLocaleLowerCase()),
+        );
+        setFilteredData(result);
+    };
+
+    const resetFilter = () => {
+        setFilteredData([]);
+        setTypeLink({
+            product: true,
+            post: true,
+        });
     };
 
     return (
@@ -31,11 +56,17 @@ function DashBoard() {
                 </div>
                 <div className={cx('right-side')}>
                     <Header />
-                    <UserAction handleShowForm={handleShowForm} />
-                    <FilterData />
+                    <div className={cx('content-wrapper')}>
+                        <UserAction />
+                        <Search resetFilter={resetFilter} />
+                        <LinkPaginate
+                            itemsPerPage={4}
+                            typeLink={typeCategories}
+                            data={filterData.length > 0 ? filterData : LinkData}
+                        />
+                    </div>
                 </div>
             </div>
-            {showForm && <HandleForm handleShowForm={handleShowForm} />}
         </div>
     );
 }

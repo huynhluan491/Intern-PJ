@@ -1,8 +1,10 @@
 .cate-title {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    gap: 6rem;
+    gap: 1rem;
     align-items: center;
+    font-size: 1.4rem;
+    color: #5a6276;
     .description-link {
         display: flex;
         align-items: center;

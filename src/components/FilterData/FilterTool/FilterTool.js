@@ -3,14 +3,17 @@ import styles from './FilterTool.module.scss';
 
 const cx = classNames.bind(styles);
 
-const FilterTool = ({ resetSearchQuery }) => {
+const FilterTool = ({ resetFilter }) => {
+    const handleResetFilter = () => {
+        resetFilter();
+    };
     return (
         <div className={cx('filter-title')}>
             <div className={cx('icon-filter')}>
                 <p className={cx('filter-text')}>LỌC DỮ LIỆU</p>
             </div>
             <div className={cx('reset-filter')}>
-                <button onClick={resetSearchQuery}>
+                <button onClick={handleResetFilter}>
                     <p className={cx('reset-text')}>Reset bộ lọc</p>
                 </button>
             </div>

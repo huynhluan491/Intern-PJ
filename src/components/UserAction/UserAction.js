@@ -3,28 +3,36 @@ import styles from './UserAction.module.scss';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faDownload, faPlus, faUpload } from '@fortawesome/free-solid-svg-icons';
 import Checkbox from '@mui/material/Checkbox';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import HandleForm from '../HandleForm/HandleForm';
 
 const cx = classNames.bind(styles);
 
-const UserAction = ({ handleShowForm }) => {
+const UserAction = () => {
     const [showProduct, setShowProduct] = useState(true);
+    const [showAddForm, setShowAddForm] = useState(false);
     const [showPost, setShowPost] = useState(true);
-
     const dispatch = useDispatch();
-    const { typeCategories } = useSelector((state) => state.FilterReducer);
+    const checkedRef = useRef();
 
     const newTypeCategories = {
         product: showProduct,
         post: showPost,
     };
 
-    useEffect(() => {}, [showPost, showProduct]);
-
     useEffect(() => {
         dispatch({ type: 'FILTER_TYPE_CATEGORIES', newTypeCategories });
     }, [showPost, showProduct]);
+
+    const handleShowAddForm = () => {
+        setShowAddForm(!showAddForm);
+    };
+
+    useEffect(() => {
+        console.log(showPost);
+        console.log(showProduct);
+    });
 
     return (
         <div className={cx('user-action')}>
@@ -39,6 +47,7 @@ const UserAction = ({ handleShowForm }) => {
                             },
                         }}
                         onClick={() => setShowProduct(!showProduct)}
+                        ref={checkedRef}
                     />
                 </div>
                 <div className={cx('link-filter-box')}>
@@ -51,6 +60,7 @@ const UserAction = ({ handleShowForm }) => {
                             },
                         }}
                         onClick={() => setShowPost(!showPost)}
+                        ref={checkedRef}
                     />
                 </div>
             </div>
@@ -62,11 +72,12 @@ const UserAction = ({ handleShowForm }) => {
                     <FontAwesomeIcon icon={faDownload} />
                     <p className={cx('text')}>Template</p>
                 </button>
-                <button className={cx('add-btn')} onClick={handleShowForm}>
+                <button className={cx('add-btn')} onClick={handleShowAddForm}>
                     <FontAwesomeIcon icon={faPlus} />
                     <p className={cx('text')}>THÊM MỚI</p>
                 </button>
             </div>
+            {showAddForm && <HandleForm handleShowAddForm={handleShowAddForm} />}
         </div>
     );
 };

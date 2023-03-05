@@ -5,31 +5,17 @@ import { faSearch } from '@fortawesome/free-solid-svg-icons';
 import { useRef, useState } from 'react';
 import useDebounce from '~/Hook/useDebounce';
 import FilterTool from '../FilterTool/FilterTool';
-import LinkPaginate from '~/components/LinkPaginate/LinkPaginate';
-import { useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 
 const cx = classNames.bind(styles);
 
-const Search = () => {
+const Search = ({ resetFilter }) => {
     const [searchQuery, setSearchQuery] = useState('');
-    const [filterData, setFilteredData] = useState([]);
-    const debouncedValue = useDebounce(searchQuery, 1000);
+    const dispatch = useDispatch();
     const inputRef = useRef();
-
-    const { LinkData } = useSelector((state) => ({
-        LinkData: state.LinkReducer.LinkData,
-    }));
-
-    const handleFilterData = () => {
-        const result = LinkData.filter((item) =>
-            item.description.toLocaleLowerCase().includes(debouncedValue.toLocaleLowerCase()),
-        );
-        setFilteredData(result);
-    };
 
     const handleOnChangSearch = (e) => {
         const searchQuery = e.target.value;
-        console.log(searchQuery);
         const KEY_SPACE = /\s/g;
 
         if (!KEY_SPACE.test(searchQuery[0])) {
@@ -38,18 +24,13 @@ const Search = () => {
     };
 
     const handleSearchIcon = () => {
-        handleFilterData();
-    };
-
-    const resetSearchQuery = () => {
-        setSearchQuery('');
-        setFilteredData([]);
+        dispatch({ type: 'REQUEST_SEARCH_QUERY', searchQuery });
     };
 
     return (
         <div className={cx('search-container')}>
             <div className={cx('tool-wrapper')}>
-                <FilterTool resetSearchQuery={resetSearchQuery} />
+                <FilterTool resetFilter={resetFilter} />
                 <div className={cx('find-link-title')}>
                     <p className={cx('title')}>Tìm kiếm đường link</p>
                     <div className={cx('search-input')}>
@@ -66,7 +47,6 @@ const Search = () => {
                     </div>
                 </div>
             </div>
-            <LinkPaginate itemsPerPage={4} data={filterData.length > 0 ? filterData : LinkData} />
         </div>
     );
 };

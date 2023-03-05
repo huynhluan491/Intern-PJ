@@ -5,26 +5,57 @@ import { useDispatch, useSelector } from 'react-redux';
 
 const cx = classNames.bind(styles);
 
-const HandleForm = ({ handleShowForm }) => {
-    const [descriptionValue, setDescriptionValue] = useState('');
-    const [oldLinkValue, setOldLinkValue] = useState('');
-    const [newLinkValue, setNewLinkValue] = useState('');
-    const [typeLinkInput, setTypeLinkInput] = useState('');
-
+const HandleForm = ({ handleFormModal, data, handleShowAddForm }) => {
+    const [descriptionValue, setDescriptionValue] = useState(data ? data.description : '');
+    const [oldLinkValue, setOldLinkValue] = useState(data ? data.old_link : '');
+    const [newLinkValue, setNewLinkValue] = useState(data ? data.new_link : '');
+    const [typeLinkInput, setTypeLinkInput] = useState(data ? data.type : '');
+    const radioCheck = useRef();
     const { LinkData } = useSelector((state) => state.LinkReducer);
-
     const dispatch = useDispatch();
-
+    console.log(data);
     const handleSubmit = () => {
-        dispatch({
-            type: 'ADD_LINK',
-            payload: {
-                description: descriptionValue,
-                old_link: oldLinkValue,
-                new_link: newLinkValue,
-                type: typeLinkInput,
-            },
-        });
+        if (!data) {
+            if (descriptionValue !== '' && oldLinkValue !== '' && newLinkValue !== '' && typeLinkInput !== '') {
+                dispatch({
+                    type: 'ADD_LINK',
+                    payload: {
+                        description: descriptionValue,
+                        old_link: oldLinkValue,
+                        new_link: newLinkValue,
+                        type: typeLinkInput,
+                    },
+                });
+                setDescriptionValue('');
+                setOldLinkValue('');
+                setNewLinkValue('');
+                setTypeLinkInput('');
+                window.alert('Them thanh cong');
+            } else {
+                window.alert('Vui long nhap du thong tin');
+            }
+        } else {
+            dispatch({
+                type: 'EDIT_LINK',
+                payload: {
+                    idLink: data.id,
+                    updateDescription: descriptionValue,
+                    updateOldLink: oldLinkValue,
+                    updateNewLink: newLinkValue,
+                    updateType: typeLinkInput,
+                },
+            });
+
+            window.alert('Sua thanh cong');
+        }
+    };
+
+    const handleCloseForm = () => {
+        if (data) {
+            handleFormModal();
+        } else {
+            handleShowAddForm();
+        }
     };
 
     return (
@@ -32,7 +63,7 @@ const HandleForm = ({ handleShowForm }) => {
             <div className={cx('form-header')}>
                 <p className={cx('text')}>DEAD LINK</p>
             </div>
-            <form className={cx('form-cate')}>
+            <div className={cx('form-cate')}>
                 <p className={cx('cate-title')}>Phân Loại</p>
                 <div className={cx('radio-wrapper')}>
                     <input
@@ -40,6 +71,7 @@ const HandleForm = ({ handleShowForm }) => {
                         name="link_category"
                         type="radio"
                         value="product"
+                        ref={radioCheck}
                         onClick={() => setTypeLinkInput('product')}
                     />
                     <label htmlFor="product" className={cx('title')}>
@@ -50,6 +82,7 @@ const HandleForm = ({ handleShowForm }) => {
                         name="link_category"
                         type="radio"
                         value="post"
+                        ref={radioCheck}
                         onClick={() => setTypeLinkInput('post')}
                     />
                     <label htmlFor="post" className={cx('title')}>
@@ -88,7 +121,7 @@ const HandleForm = ({ handleShowForm }) => {
                         />
                     </div>
                     <div className={cx('form-submit')}>
-                        <button className={cx('close-btn')} onClick={handleShowForm}>
+                        <button className={cx('close-btn')} onClick={handleCloseForm}>
                             Đóng
                         </button>
                         <button className={cx('update-btn')} onClick={handleSubmit}>
@@ -96,7 +129,7 @@ const HandleForm = ({ handleShowForm }) => {
                         </button>
                     </div>
                 </div>
-            </form>
+            </div>
         </div>
     );
 };

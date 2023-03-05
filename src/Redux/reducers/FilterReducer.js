@@ -1,7 +1,7 @@
 const initialState = {
     typeCategories: {
         product: true,
-        post: false,
+        post: true,
     },
 };
 
@@ -20,7 +20,7 @@ const FilterReducer = (state = initialState, action) => {
                 typeCategories: newTypeValue,
             };
         default:
-            return state;
+            return { ...state };
     }
 };
 
